@@ -10,6 +10,12 @@
         <div class="my-4">
             <ul class="list-group" id="items">
             </ul>
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb mt-3">
+                    <li class="breadcrumb-item active" aria-current="page">Total Cart Price is:&nbsp<b> ₹ </b><b><span id="totalPrice"></span></b>. Enter Your Details & Place Your Order.</li>
+                </ol>
+            </nav>
+            
         </div>
     </div>
     <div class="col my-4">
@@ -23,25 +29,30 @@
                 </div>
                 <div class="form-group col-md-6">
                     <label for="inputEmail4">Email</label>
-                    <input type="email" class="form-control" id="email" required="true"   name="email" placeholder="Email">
+                    <input type="email" class="form-control" id="email" required="true" name="email"
+                        placeholder="Email">
                 </div>
             </div>
             <div class="form-group">
                 <label for="inputAddress">Address</label>
-                <input type="text" class="form-control" id="address1" required="true" name="address1" placeholder="1234 Main St">
+                <input type="text" class="form-control" id="address1" required="true" name="address1"
+                    placeholder="1234 Main St">
             </div>
             <div class="form-group">
                 <label for="inputAddress2">Address line 2</label>
-                <input type="text" class="form-control" id="address2" required="true" name="address2" placeholder="Apartment, studio, or floor">
+                <input type="text" class="form-control" id="address2" required="true" name="address2"
+                    placeholder="Apartment, studio, or floor">
             </div>
             <div class="form-row">
                 <div class="form-group col-md-6">
                     <label for="inputCity">City</label>
-                    <input type="text" class="form-control" id="city" required="true" name="city" placeholder="Enter City">
+                    <input type="text" class="form-control" id="city" required="true" name="city"
+                        placeholder="Enter City">
                 </div>
                 <div class="form-group col-md-4">
                     <label for="inputState">State</label>
-                    <input type="text" class="form-control" id="state" required="true" name="state" placeholder="Enter State">
+                    <input type="text" class="form-control" id="state" required="true" name="state"
+                        placeholder="Enter State">
                 </div>
                 <div class="form-group col-md-2">
                     <label for="inputZip">Zip</label>
@@ -52,9 +63,9 @@
                 <label for="inputZip">Phone Number</label>
                 <input type="tel" class="form-control" id="phone_number" required="true" name="phone_number">
             </div>
-    <button type="submit" class="btn btn-primary">Place Order</button>
-    </form>
-</div>
+            <button type="submit" class="btn btn-primary">Place Order</button>
+        </form>
+    </div>
 </div>
 {% endblock %}
 {%  block js %}
@@ -70,33 +81,37 @@
         // Adding this because we need to read items already present in the cart
     }
     console.log(cart);
-  var sum = 0;  
-  if ($.isEmptyObject(cart)){
-    //If Object is Empty
-    mystr = `Your cart is empty, please add some items to your cart before checking`
+    var sum = 0;
+    var totalPrice = 0;
+    if ($.isEmptyObject(cart)) {
+        //If Object is Empty
+        mystr = `Your cart is empty, please add some items to your cart before checking`
 
     }
-    else{
-    for (item in cart) {
-        let name = cart[item][1];
-        let qty = cart[item][0];
-        sum = sum + qty;
-        mystr = `<li class="list-group-item d-flex justify-content-between align-items-center">
+    else {
+        for (item in cart) {
+            let name = cart[item][1];
+            let qty = cart[item][0];
+            let itemPrice = cart[item][2];
+            sum = sum + qty;
+            totalPrice = totalPrice + qty * itemPrice
+            mystr = `<li class="list-group-item d-flex justify-content-between align-items-center">
                     ${name}
                     <span class="badge badge-primary badge-pill">${qty}</span>
-        </li>`
+                </li>`
 
-        $('#items').append(mystr);
+            $('#items').append(mystr);
+        }
     }
-}
-document.getElementById('cart').innerHTML=sum;
+    document.getElementById('cart').innerHTML = sum;
+    document.getElementById('totalPrice').innerHTML = totalPrice;
 
-$('#itemsJson').val(JSON.stringify(cart));
-{% if thank %}
-alert('Thanks for ordering with us. Your order id is {{id}}. Use it to track your order using our order tracker');
-localStorage.clear();
-document.location = "/shop";
-{% endif %}
+    $('#itemsJson').val(JSON.stringify(cart));
+    {% if thank %}
+    alert('Thanks for ordering with us. Your order id is {{id}}. Use it to track your order using our order tracker');
+    localStorage.clear();
+    document.location = "/shop";
+    {% endif %}
 
 </script>
 
