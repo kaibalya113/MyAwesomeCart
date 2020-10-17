@@ -14,7 +14,7 @@ This website has 3 parts 1st is Home Page - Home page takes you to the other 2 p
 Home Page of My E-Commerce Website
 ![](https://github.com/jaishivnani/MyAwesomeCart/blob/master/media/shop/images/HomePage.PNG)
 
-By Homepage you can go to the other 2 sections of website which are shop and blog.
+By Homepage you can cccgo to the other 2 sections of website which are shop and blog.
 
 
 
